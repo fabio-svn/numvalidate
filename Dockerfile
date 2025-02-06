@@ -4,10 +4,9 @@ WORKDIR /app
 
 COPY package.json /app
 
-USER root
-RUN npm cache clean --force
-RUN npm install -g npm@latest --unsafe-perm
-RUN npm i -g yarn --unsafe-perm
+# Remover Yarn existente e reinstalar
+RUN rm -f /usr/local/bin/yarn && npm install -g npm@latest --unsafe-perm
+RUN npm i -g yarn --unsafe-perm --force
 
 COPY . .
 
