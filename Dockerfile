@@ -1,9 +1,16 @@
-FROM node:8-alpine
+FROM node:18-alpine
 
-RUN mkdir /app
-# Set the working directory to /app
 WORKDIR /app
+
 COPY package.json /app
-RUN npm i -g yarn
-RUN yarn
+
+USER root
+RUN npm cache clean --force
+RUN npm install -g npm@latest --unsafe-perm
+RUN npm i -g yarn --unsafe-perm
+
+COPY . .
+
 EXPOSE 1667
+
+CMD ["yarn", "start"]
